@@ -1,0 +1,217 @@
+- alias: rfbridge_demultiplexer
+  trigger:
+  - platform: mqtt
+    topic: tele/RF_Bridge/RESULT
+  action:
+  - service: python_script.rfbridge_demux
+    data_template:
+      payload: '{{trigger.payload_json.RfReceived.Data}}'
+  id: 93076a6efa1b4c7ba1e6b9a18935eedc
+- alias: Notify on Motion
+  trigger:
+  - platform: state
+    to: 'ON'
+    entity_id: sensor.datchik_dvizheniia_vishnevaia_17
+  action:
+  - service: notify.WildMamont
+    data:
+      message: 'Сработал: {{ state_attr(''sensor.datchik_dvizheniia_vishnevaia_17'',
+        ''friendly_name'') }} '
+  - service: notify.Vladimir
+    data:
+      message: 'Сработал: {{ state_attr(''sensor.datchik_dvizheniia_vishnevaia_17'',
+        ''friendly_name'') }} '
+  - service: python_script.set_states
+    data_template:
+      entity_id: sensor.datchik_dvizheniia_vishnevaia_17
+      last_triggered: '{{ now().strftime(''%Y-%m-%d %H:%M:%S'') }} '
+  id: cebb0e5ac15e42fc9074f6f9d18efb68
+- alias: Notify on Door open
+  trigger:
+  - platform: state
+    to: 'ON'
+    entity_id: sensor.datchik_dveri_vishnevaia_17
+  action:
+  - service: notify.WildMamont
+    data:
+      message: 'Сработал: {{ state_attr(''sensor.datchik_dveri_vishnevaia_17'', ''friendly_name'')
+        }} '
+  - service: python_script.set_states
+    data_template:
+      entity_id: sensor.datchik_dveri_vishnevaia_17
+      last_triggered: '{{ now().strftime(''%Y-%m-%d %H:%M:%S'') }} '
+  id: 9560e3f5f50a4985969d767d0d39d6ad
+- alias: Notify on unknown rf
+  trigger:
+  - platform: state
+    entity_id: sensor.mqttunknownrf
+  action:
+  - service: notify.WildMamont
+    data:
+      message: 'Сработал: {{ states.sensor.rf_bridge }} '
+  - service: python_script.set_states
+    data_template:
+      entity_id: sensor.mqttunknownrf
+      last_triggered: '{{ now().strftime(''%Y-%m-%d %H:%M:%S'') }} '
+  id: 6ebaf4f9ab13412c884fe75c2cade121
+- id: bd8682b6870a4e65b9bf5c2cf26ad019
+  alias: hikvision_photo
+  trigger:
+  - platform: state
+    to: 'ON'
+    entity_id: sensor.datchik_dvizheniia_vishnevaia_17
+  action:
+  - service: notify.WildMamont
+    data:
+      title: Send a video
+      message: Thats an example that sends a video.
+      data:
+        photo:
+        - url: http://192.168.17.125/Streaming/channels/1/picture
+          username: admin
+          password: a6xzoq_Z
+          caption: i.e., for a Title
+  mode: single
+- alias: Telegram bot that reply pong to ping
+  trigger:
+    platform: event
+    event_type: telegram_command
+    event_data:
+      command: /ping
+  action:
+  - service: notify.notify
+    data:
+      message: pong
+  id: d558eb3c72ca439c928ba82573b20363
+- id: '1603481324212'
+  alias: telegram_bot_start
+  description: ''
+  trigger:
+  - event_data: {}
+    event_type: telegram_text
+    platform: event
+  condition: []
+  action:
+  - data:
+      chat_id: '{{ trigger.event.data.chat_id }}'
+      disable_notification: true
+      inline_keyboard:
+      - Температура:/temperature, Фотография:/photo
+      message: ' Набор команд '
+      title: ' Автоматика вишни '
+    service: telegram_bot.send_message
+- id: '1603483203464'
+  alias: telegram_show_temperature
+  description: Показать температуру
+  trigger:
+  - event_data:
+      command: /temperature
+    event_type: telegram_command
+    platform: event
+  condition: []
+  action:
+  - data:
+      message: '  {{ trigger.event.data.chat_id }} '
+      target: 51527842
+    service: telegram_bot.send_message
+- id: '1603571949928'
+  alias: Передаем фотографию в полдень
+  description: ''
+  trigger:
+  - at: '12:00'
+    platform: time
+  condition: []
+  action:
+  - data:
+      caption: Фото  в полдень {{ now().strftime('%Y-%m-%d %H:%M:%S') }}
+      password: a6xzoq_Z
+      target:
+      - 51527842
+      - 1270037554
+      - 419391648
+      - 195170377
+      timeout: 350
+      url: http://192.168.17.125/Streaming/channels/1/picture
+      username: admin
+    service: telegram_bot.send_photo
+  - data:
+      message: 'Температура на втором этаже: {{ states(''sensor.28_3c01b5563c0e_temperature'')
+        }}, Температура на улице : {{ states(''sensor.tasmota_ds18b20_3_temperature'')
+        }}, Температура под крышей : {{ states(''sensor.tasmota_ds18b20_2_temperature'')
+        }}, Температура в подвале: {{states(''sensor.28_3c01b5568add_temperature'')
+        }}'
+      timeout: 350
+      target:
+      - 51527842
+      - 1270037554
+      - 419391648
+      - 195170377
+    service: telegram_bot.send_message
+  mode: single
+- id: '1603573083149'
+  alias: return photo callback
+  description: ''
+  trigger:
+  - event_data:
+      command: /photo
+    event_type: telegram_callback
+    platform: event
+  condition: []
+  action:
+  - data:
+      callback_query_id: '{{ trigger.event.data.id }}'
+      message: 'Запросили фотографию  в {{ now().strftime(''%Y-%m-%d %H:%M:%S'') }} '
+      show_alert: true
+    service: telegram_bot.answer_callback_query
+  - data:
+      target: '{{ trigger.event.data.chat_id }}'
+      timeout: 250
+      url: http://192.168.17.93:8123/local/xm_image.jpg
+    service: telegram_bot.send_photo
+  - data:
+      inline_keyboard:
+      - Температура:/temperature, Фотография:/foto
+      - Remove this button:/remove_button
+      password: a6xzoq_Z
+      target: '{{ trigger.event.data.chat_id }}'
+      timeout: 250
+      url: http://192.168.17.125/Streaming/channels/1/picture
+      username: admin
+    service: telegram_bot.send_photo
+  mode: single
+- id: '1603574058379'
+  alias: telegram bot temperature
+  description: ''
+  trigger:
+  - event_data:
+      command: /temperature
+    event_type: telegram_callback
+    platform: event
+  condition: []
+  action:
+  - data:
+      message: 'Температура на втором этаже: {{ states(''sensor.28_3c01b5562324_temperature'')  }}'
+      target:
+      - '{{ event.data.chat_id }}'
+    service: telegram_bot.send_message
+  - data:
+      callback_query_id:
+      - '{{ trigger.event.data.chat_id }}'
+      message: 'I repeat: {{trigger.event.data["args"]}}'
+    service: telegram_bot.answer_callback_query
+- id: '1610994751360'
+  alias: Автоматически рассылать SMS
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: sensor.hilink_sms_count
+    attribute: LocalUnread
+    for: 00:03:30
+  condition:
+  - condition: state
+    entity_id: sensor.hilink_sms_smstat
+    state: '0'
+  action:
+  - service: script.public_sms
+    data: {}
+  mode: single

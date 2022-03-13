@@ -1,0 +1,125 @@
+
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+python_script:
+
+
+# Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+# http:
+#   base_url: example.duckdns.org:8123
+
+# Text to speech
+#tts:
+#  - platform: google_translate
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+homeassistant:
+  customize: !include customize.yaml
+logger: !include logger.yaml
+sensor: !include sensor.yaml
+
+telegram_bot:
+  - platform: polling
+    api_key: !secret telegram_bot_api_key
+    allowed_chat_ids:
+      - !secret telegram_bot_allowed_chat_id1
+      - !secret telegram_bot_allowed_chat_id2
+      - !secret telegram_bot_allowed_chat_id3
+      - !secret telegram_bot_allowed_chat_id4
+      - !secret telegram_bot_allowed_chat_id5
+
+notify:
+  - name: WildMamont
+    platform: telegram
+    chat_id: !secret telegram_bot_allowed_chat_id1
+  - name: Vladimir
+    platform: telegram
+    chat_id: !secret telegram_bot_allowed_chat_id4
+
+
+#panel_iframe:
+#  router:
+#    title: 'Router'
+#    url: 'http://192.168.17.1'    
+#  fomino:
+#    title: 'Fomino HASS'
+#    url: 'http://192.168.20.44:8123/lovelace'    
+
+
+device_tracker:
+  - platform: keenetic_ndms2
+    host: 192.168.17.1
+    username: admin
+    password: a6xzoq_Z
+    new_device_defaults:
+      track_new_devices: true
+
+#switch:
+#  - platform: hikvisioncam
+#    host: 192.168.17.125
+#    name: hikvision_sw
+#    port: 80
+#    ssl: false
+#    username: admin
+#    password: a6xzoq_Z
+# #   customize:
+#      motion:
+#        delay: 30
+#      line_crossing:
+#        ignored: true
+
+#binary_sensor:
+#  - platform: hikvision
+#    host: 192.168.17.125
+#    port: 80
+#    ssl: false
+#    username: admin
+#    password: a6xzoq_Z
+#    customize:
+#      motion:
+#        delay: 30
+#      line_crossing:
+#        ignored: true
+
+camera:
+  - platform: generic
+    name: HikVision Camera
+    still_image_url: http://192.168.17.125/Streaming/channels/1/picture
+#    stream_source: rtsp://192.168.17.125:10554/Streaming/channels/101
+#    stream_source: rtsp://192.168.17.125:10554/Streaming/channels/1
+    username: admin
+    password: a6xzoq_Z
+#    authentication: digest                  Isapi/
+    verify_ssl: false
+
+#  - platform: mjpeg
+#    name: Warrior
+#    mjpeg_url: http://192.168.17.93:8123/local/xm_image.jpg
+#    stream_source: rtsp://192.168.10.1:34567/
+#    username: admin
+#    password: tlJwpbo6
+#    authentication: digest                  Isapi/
+#    verify_ssl: false
+
+
+
+rest_command:
+  sms_mark_read:
+    url: http://localhost/hilink/api/sms/set-read
+    method: POST
+    headers:
+      accept: 'application/xml'
+    payload: '<?xml version="1.0" encoding="UTF-8"?><request><Index>{{ sms_index  }}</Index></request>'
+    content_type:  'application/xml; charset=utf-8'
+
+  telegram_send_message:
+    url: !secret telegram_bot_send_message
+    method: POST
+    payload: 'chat_id={{ chat_id }}&text=Новое сообщение({{ states.sensor.hilink_sms_list.attributes["Index"] }}) От:{{ states.sensor.hilink_sms_list.attributes["Phone"] }}, Дата:{{ states.sensor.hilink_sms_list.attributes["Date"] }}, Содержание: {{ states.sensor.hilink_sms_list.attributes["Content"] }}'
+    verify_ssl: false
+    headers:
+      Accept: '*/*'
+      Content-Type: 'application/x-www-form-urlencoded'

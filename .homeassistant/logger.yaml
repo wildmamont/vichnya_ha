@@ -1,0 +1,16 @@
+default: error
+logs:
+    # log level for HA core
+  homeassistant.core: error
+  homeassistant.components: error
+  homeassistant.components.onewire: error
+  homeassistant.components.keenetic_ndms2: critical
+  homeassistant.components.hikvision: critical
+  homeassistant.components.device_tracker: DEBUG
+#  homeassistant.components.mqtt: debug
+#  homeassistant.components.http: debug
+  homeassistant.components.rest: error
+  homeassistant.components.template: debug
+#  homeassistant.components.onvif: debug
+  homeassistant.components.telegram: debug
+  homeassistant.components.stream: debug
