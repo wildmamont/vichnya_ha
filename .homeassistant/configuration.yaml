@@ -49,13 +49,13 @@ notify:
 #    url: 'http://192.168.20.44:8123/lovelace'    
 
 
-device_tracker:
-  - platform: keenetic_ndms2
-    host: 192.168.17.1
-    username: admin
-    password: a6xzoq_Z
-    new_device_defaults:
-      track_new_devices: true
+#device_tracker:
+#  - platform: keenetic_ndms2
+#    host: 192.168.17.1
+#    username: hass
+#    password: !secret keenetic_telnet_user_password
+#    new_device_defaults:
+#      track_new_devices: true
 
 #switch:
 #  - platform: hikvisioncam

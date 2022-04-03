@@ -3,7 +3,6 @@ logs:
     # log level for HA core
   homeassistant.core: error
   homeassistant.components: error
-  homeassistant.components.onewire: error
   homeassistant.components.keenetic_ndms2: critical
   homeassistant.components.hikvision: critical
   homeassistant.components.device_tracker: DEBUG
