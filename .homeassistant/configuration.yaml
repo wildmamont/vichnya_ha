@@ -64,7 +64,6 @@ notify:
 #    port: 80
 #    ssl: false
 #    username: admin
-#    password: a6xzoq_Z
 # #   customize:
 #      motion:
 #        delay: 30
@@ -76,24 +75,18 @@ notify:
 #    host: 192.168.17.125
 #    port: 80
 #    ssl: false
-#    username: admin
-#    password: a6xzoq_Z
 #    customize:
 #      motion:
 #        delay: 30
 #      line_crossing:
 #        ignored: true
 
-camera:
-  - platform: generic
-    name: HikVision Camera
-    still_image_url: http://192.168.17.125/Streaming/channels/1/picture
+#camera:
+#  - platform: generic
+#    name: HikVision Camera
+#    still_image_url: http://192.168.17.125/Streaming/channels/1/picture
 #    stream_source: rtsp://192.168.17.125:10554/Streaming/channels/101
 #    stream_source: rtsp://192.168.17.125:10554/Streaming/channels/1
-    username: admin
-    password: a6xzoq_Z
-#    authentication: digest                  Isapi/
-    verify_ssl: false
 
 #  - platform: mjpeg
 #    name: Warrior
@@ -107,13 +100,13 @@ camera:
 
 
 rest_command:
-  sms_mark_read:
-    url: http://localhost/hilink/api/sms/set-read
-    method: POST
-    headers:
-      accept: 'application/xml'
-    payload: '<?xml version="1.0" encoding="UTF-8"?><request><Index>{{ sms_index  }}</Index></request>'
-    content_type:  'application/xml; charset=utf-8'
+#  sms_mark_read:
+#    url: http://localhost/hilink/api/sms/set-read
+#    method: POST
+#    headers:
+#      accept: 'application/xml'
+#    payload: '<?xml version="1.0" encoding="UTF-8"?><request><Index>{{ sms_index  }}</Index></request>'
+#    content_type:  'application/xml; charset=utf-8'
 
   telegram_send_message:
     url: !secret telegram_bot_send_message
@@ -123,3 +116,10 @@ rest_command:
     headers:
       Accept: '*/*'
       Content-Type: 'application/x-www-form-urlencoded'
+
+binary_sensor:
+  - platform: ping
+    host: 10.128.162.1
+    name: "Xtrim.ru_echo_test"
+    count: 2
+    scan_interval: 60

@@ -101,6 +101,23 @@
         {%- endif -%}
       {%- endfor %}"
     device_class: temperature
+## Восточная сторона
+  - platform: mqtt
+    name: "28_3c01b556ecd0_temperature"
+    state_topic: "tele/tasmota_95F7BD/SENSOR"
+    unit_of_measurement: "°C"
+    value_template: "{{value_json['DS18B20-3'].Temperature}}"
+    availability_topic: "tele/tasmota_95F7BD/LWT"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+    json_attributes_topic: "tele/tasmota_95F7BD/SENSOR"
+    json_attributes_template: ">-
+      {%- set sourceid = '3C01B556ECD0' -%}
+      {%- for tsensor in value_json  -%}
+        {%- if value_json[tsensor].Id == sourceid -%} {{value_json[tsensor].Temperature}}
+        {%- endif -%}
+      {%- endfor %}"
+    device_class: temperature
 
 
 ### 192.168.17.152 tasmota
@@ -141,109 +158,3 @@
 
 
 
-  - platform: rest
-    name: hilink_signal
-    resource: http://localhost/hilink/api/device/signal
-    json_attributes_path: "$.response"
-    scan_interval: 185
-    value_template: 'OK'
-    json_attributes:
-      - cell_id
-      - rsrq
-      - rsrp
-      - rssi
-      - sinr
-
-
-  - platform: rest
-    name: hilink_sms_count
-    resource: http://localhost/hilink/api/sms/sms-count
-    json_attributes_path: "$.response"
-    scan_interval: 181
-    value_template: 'OK'
-    json_attributes:
-      - LocalUnread
-      - LocalInbox
-
-  - platform: template
-    sensors:
-      hilink_sms_unread:
-        friendly_name: "Количество непрочитанных сообщений"
-        value_template: '{{ states.sensor.hilink_sms_count.attributes["LocalUnread"] }}'
-        unit_of_measurement: "шт."
-  - platform: template
-    sensors:
-      hilink_sms_inbox:
-        friendly_name: "Количество сообщений в ящике"
-        value_template: '{{ states.sensor.hilink_sms_count.attributes["LocalInbox"] }}'
-        unit_of_measurement: "шт."
-
-
-  - platform: rest
-    name: hilink_month_statistics
-    resource: http://localhost/hilink/api/monitoring/month_statistics
-    json_attributes_path: "$.response"
-    scan_interval: 182
-    value_template: 'OK'
-    json_attributes:
-      - CurrentMonthDownload
-      - CurrentMonthUpload
-      - MonthDuration
-      - MonthLastClearTime
-
-  - platform: template
-    sensors:
-      hilink_month_download:
-        friendly_name: "Модем: Скачано в этом месяце"
-        value_template: "{{ ((( state_attr('sensor.hilink_month_statistics', 'CurrentMonthDownload')) | float/1024/1024  ) | round(3)) }}"
-        unit_of_measurement: "Mb"
-
-  - platform: template
-    sensors:
-      hilink_month_upload:
-        friendly_name: "Модем: Передано в этом месяце"
-        value_template: "{{ (( state_attr('sensor.hilink_month_statistics', 'CurrentMonthUpload')) |float/1024/1024  ) | round(3) }}"
-        unit_of_measurement: "Mb"
-
-  - platform: template
-    sensors:
-      hilink_month_transfered:
-        friendly_name: "Модем: Передано всего в этом месяце"
-        value_template: "{{ ((( (state_attr('sensor.hilink_month_statistics', 'CurrentMonthDownload')) |float/1024/1024  ) | round(3)) + ((( state_attr('sensor.hilink_month_statistics', 'CurrentMonthUpload')) |float/1024/1024  ) | round(3)))}}"
-        unit_of_measurement: "Mb"
-
-  - platform: template
-    sensors:
-      hilink_month_duration:
-        friendly_name: "Модем: Длительность месяца"
-        value_template: "{{ state_attr('sensor.hilink_month_statistics','MonthDuration') }}"
-        unit_of_measurement: "sec"
-
-  - platform: template
-    sensors:
-      hilink_month_lastcleartime:
-        friendly_name: "Модем: Начало месяца"
-        value_template: "{{ state_attr('sensor.hilink_month_statistics', 'MonthLastClearTime') }}"
-
-
-  - platform: rest
-    name: hilink_sms_list
-    resource: http://localhost/hilink/api/sms/sms-list
-    json_attributes_path: "$.response.Messages.Message"
-    scan_interval: 184
-    method: POST
-    payload: '<?xml version="1.0" encoding="UTF-8"?><request><PageIndex>1</PageIndex><ReadCount>1</ReadCount><BoxType>1</BoxType><SortType>0</SortType><Ascending>0</Ascending><UnreadPreferred>1</UnreadPreferred></request>'
-    value_template: 'OK'
-    json_attributes:
-      - Smstat
-      - Index
-      - Phone
-      - Content
-      - Date
-
-  - platform: template
-    sensors:
-      hilink_sms_smstat:
-        friendly_name: "Модем: Статус сообщения"
-        value_template: "{{ state_attr('sensor.hilink_sms_list', 'Smstat')  }}"
-        unit_of_measurement: "num"

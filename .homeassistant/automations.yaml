@@ -147,6 +147,18 @@
       - 419391648
       - 195170377
     service: telegram_bot.send_message
+  - data:
+      caption: Фото  в сторону леса  {{ now().strftime('%Y-%m-%d %H:%M:%S') }}
+      password: homeassistant17
+      target:
+      - 51527842
+      - 1270037554
+      - 419391648
+      - 195170377
+      timeout: 350
+      url: http://192.168.17.92:80/onvif/snapshot/101
+      username: homeassistant
+    service: telegram_bot.send_photo
   mode: single
 - id: '1603573083149'
   alias: return photo callback

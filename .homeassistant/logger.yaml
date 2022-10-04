@@ -1,10 +1,10 @@
-default: error
+default: info
 logs:
     # log level for HA core
   homeassistant.core: error
   homeassistant.components: error
-  homeassistant.components.keenetic_ndms2: critical
-  homeassistant.components.hikvision: critical
+#  homeassistant.components.keenetic_ndms2: critical
+#  homeassistant.components.hikvision: critical
   homeassistant.components.device_tracker: DEBUG
 #  homeassistant.components.mqtt: debug
 #  homeassistant.components.http: debug
@@ -13,3 +13,6 @@ logs:
 #  homeassistant.components.onvif: debug
   homeassistant.components.telegram: debug
   homeassistant.components.stream: debug
+  homeassistant.components.onvif: debug
+  homeassistant.components.camera: debug
+  homeassistant.components.aiohttp: debug
