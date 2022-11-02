@@ -19,7 +19,9 @@ scene: !include scenes.yaml
 homeassistant:
   customize: !include customize.yaml
 logger: !include logger.yaml
-sensor: !include sensor.yaml
+#sensor: !include sensor.yaml
+mqtt:   !include mqtt.yaml
+
 
 telegram_bot:
   - platform: polling

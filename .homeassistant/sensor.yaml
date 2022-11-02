@@ -1,21 +1,21 @@
 #  - platform: onewire
 #    scan_interval: 180
-  - platform: mqtt
-    name: "28_3c01b5563c0e_temperature"
-    state_topic: "tele/tasmota_95F7C9/SENSOR"
-    unit_of_measurement: "°C"
-    value_template: "{{value_json['DS18B20-1'].Temperature}}"
-    availability_topic: "tele/tasmota_95F7C9/LWT"
-    payload_available: "Online"
-    payload_not_available: "Offline"
-    json_attributes_topic: "tele/tasmota_95F7D3/SENSOR"
-    json_attributes_template: ">-
-      {%- set sourceid = '3C01B5563C0E' -%}
-      {%- for tsensor in value_json  -%}
-        {%- if value_json[tsensor].Id == sourceid -%} {{value_json[tsensor].Temperature}}
-        {%- endif -%}
-      {%- endfor %}"
-    device_class: temperature
+#  - platform: mqtt
+#    name: "28_3c01b5563c0e_temperature"
+#    state_topic: "tele/tasmota_95F7C9/SENSOR"
+#    unit_of_measurement: "°C"
+#    value_template: "{{value_json['DS18B20-1'].Temperature}}"
+#    availability_topic: "tele/tasmota_95F7C9/LWT"
+#    payload_available: "Online"
+#    payload_not_available: "Offline"
+#    json_attributes_topic: "tele/tasmota_95F7D3/SENSOR"
+#    json_attributes_template: ">-
+#      {%- set sourceid = '3C01B5563C0E' -%}
+#      {%- for tsensor in value_json  -%}
+#        {%- if value_json[tsensor].Id == sourceid -%} {{value_json[tsensor].Temperature}}
+#        {%- endif -%}
+#      {%- endfor %}"
+#    device_class: temperature
 
 #  - platform: mqtt
 #    name: "RF Bridge"
@@ -53,91 +53,91 @@
 
 ## Второй этаж.
 # Поменять!!!!
-  - platform: mqtt
-    name: "28_3c01b5562324_temperature"
-    state_topic: "tele/tasmota_95F7C9/SENSOR"
-    unit_of_measurement: "°C"
-    value_template: "{{value_json['DS18B20-1'].Temperature}}"
-    availability_topic: "tele/tasmota_95F7C9/LWT"
-    payload_available: "Online"
-    payload_not_available: "Offline"
-    json_attributes_topic: "tele/tasmota_95F7C9/SENSOR"
-    json_attributes_template: ">-
-      {%- set sourceid = '3C01B5563C0E' -%}
-      {%- for tsensor in value_json  -%}
-        {%- if value_json[tsensor].Id == sourceid -%} {{value_json[tsensor].Temperature}}
-        {%- endif -%}
-      {%- endfor %}"
-    device_class: temperature
-  - platform: mqtt
-    name: "28_3c01b556abd9_temperature"
-    state_topic: "tele/tasmota_95F7BD/SENSOR"
-    unit_of_measurement: "°C"
-    value_template: "{{value_json['DS18B20-1'].Temperature}}"
-    availability_topic: "tele/tasmota_95F7BD/LWT"
-    payload_available: "Online"
-    payload_not_available: "Offline"
-    json_attributes_topic: "tele/tasmota_95F7BD/SENSOR"
-    json_attributes_template: ">-
-      {%- set sourceid = '3C01B556ABD9' -%}
-      {%- for tsensor in value_json  -%}
-        {%- if value_json[tsensor].Id == sourceid -%} {{value_json[tsensor].Temperature}}
-        {%- endif -%}
-      {%- endfor %}"
-    device_class: temperature
-  - platform: mqtt
-    name: "28_3c01b556dd86_temperature"
-    state_topic: "tele/tasmota_95F7BD/SENSOR"
-    unit_of_measurement: "°C"
-    value_template: "{{value_json['DS18B20-2'].Temperature}}"
-    availability_topic: "tele/tasmota_95F7BD/LWT"
-    payload_available: "Online"
-    payload_not_available: "Offline"
-    json_attributes_topic: "tele/tasmota_95F7BD/SENSOR"
-    json_attributes_template: ">-
-      {%- set sourceid = '3C01B556DD86' -%}
-      {%- for tsensor in value_json  -%}
-        {%- if value_json[tsensor].Id == sourceid -%} {{value_json[tsensor].Temperature}}
-        {%- endif -%}
-      {%- endfor %}"
-    device_class: temperature
+#  - platform: mqtt
+#    name: "28_3c01b5562324_temperature"
+#    state_topic: "tele/tasmota_95F7C9/SENSOR"
+#    unit_of_measurement: "°C"
+#    value_template: "{{value_json['DS18B20-1'].Temperature}}"
+#    availability_topic: "tele/tasmota_95F7C9/LWT"
+#    payload_available: "Online"
+#    payload_not_available: "Offline"
+#    json_attributes_topic: "tele/tasmota_95F7C9/SENSOR"
+#   json_attributes_template: ">-
+#      {%- set sourceid = '3C01B5563C0E' -%}
+#      {%- for tsensor in value_json  -%}
+#        {%- if value_json[tsensor].Id == sourceid -%} {{value_json[tsensor].Temperature}}
+#        {%- endif -%}
+#      {%- endfor %}"
+#    device_class: temperature
+#  - platform: mqtt
+#    name: "28_3c01b556abd9_temperature"
+#    state_topic: "tele/tasmota_95F7BD/SENSOR"
+#    unit_of_measurement: "°C"
+#    value_template: "{{value_json['DS18B20-1'].Temperature}}"
+#    availability_topic: "tele/tasmota_95F7BD/LWT"
+#    payload_available: "Online"
+#    payload_not_available: "Offline"
+#    json_attributes_topic: "tele/tasmota_95F7BD/SENSOR"
+#    json_attributes_template: ">-
+#      {%- set sourceid = '3C01B556ABD9' -%}
+#      {%- for tsensor in value_json  -%}
+#        {%- if value_json[tsensor].Id == sourceid -%} {{value_json[tsensor].Temperature}}
+#        {%- endif -%}
+#      {%- endfor %}"
+#    device_class: temperature
+#  - platform: mqtt
+#    name: "28_3c01b556dd86_temperature"
+#    state_topic: "tele/tasmota_95F7BD/SENSOR"
+#    unit_of_measurement: "°C"
+#    value_template: "{{value_json['DS18B20-2'].Temperature}}"
+#    availability_topic: "tele/tasmota_95F7BD/LWT"
+#    payload_available: "Online"
+#    payload_not_available: "Offline"
+#    json_attributes_topic: "tele/tasmota_95F7BD/SENSOR"
+#    json_attributes_template: ">-
+ #     {%- set sourceid = '3C01B556DD86' -%}
+#      {%- for tsensor in value_json  -%}
+#        {%- if value_json[tsensor].Id == sourceid -%} {{value_json[tsensor].Temperature}}
+#        {%- endif -%}
+#      {%- endfor %}"
+#    device_class: temperature
 ## Восточная сторона
-  - platform: mqtt
-    name: "28_3c01b556ecd0_temperature"
-    state_topic: "tele/tasmota_95F7BD/SENSOR"
-    unit_of_measurement: "°C"
-    value_template: "{{value_json['DS18B20-3'].Temperature}}"
-    availability_topic: "tele/tasmota_95F7BD/LWT"
-    payload_available: "Online"
-    payload_not_available: "Offline"
-    json_attributes_topic: "tele/tasmota_95F7BD/SENSOR"
-    json_attributes_template: ">-
-      {%- set sourceid = '3C01B556ECD0' -%}
-      {%- for tsensor in value_json  -%}
-        {%- if value_json[tsensor].Id == sourceid -%} {{value_json[tsensor].Temperature}}
-        {%- endif -%}
-      {%- endfor %}"
-    device_class: temperature
+#  - platform: mqtt
+#    name: "28_3c01b556ecd0_temperature"
+#    state_topic: "tele/tasmota_95F7BD/SENSOR"
+#    unit_of_measurement: "°C"
+#    value_template: "{{value_json['DS18B20-3'].Temperature}}"
+#    availability_topic: "tele/tasmota_95F7BD/LWT"
+#    payload_available: "Online"
+#    payload_not_available: "Offline"
+#    json_attributes_topic: "tele/tasmota_95F7BD/SENSOR"
+#    json_attributes_template: ">-
+#      {%- set sourceid = '3C01B556ECD0' -%}
+#      {%- for tsensor in value_json  -%}
+#        {%- if value_json[tsensor].Id == sourceid -%} {{value_json[tsensor].Temperature}}
+#        {%- endif -%}
+#      {%- endfor %}"
+#    device_class: temperature
 
 
 ### 192.168.17.152 tasmota
 ## Подвал
-  - platform: mqtt
-    name: "28_3c01b5568add_temperature"
-    state_topic: "tele/tasmota_95F7C9/SENSOR"
-    unit_of_measurement: "°C"
-    value_template: "{{value_json['DS18B20-2'].Temperature}}"
-    availability_topic: "tele/tasmota_95F7C9/LWT"
-    payload_available: "Online"
-    payload_not_available: "Offline"
-    json_attributes_topic: "tele/tasmota_95F7C9/SENSOR"
-    json_attributes_template: ">-
-      {%- set sourceid = '3C01B5568ADD' -%}
-      {%- for tsensor in value_json  -%}
-        {%- if value_json[tsensor].Id == sourceid -%} {{value_json[tsensor].Temperature}}
-        {%- endif -%}
-      {%- endfor %}"
-    device_class: temperature
+##  - platform: mqtt
+##    name: "28_3c01b5568add_temperature"
+##    state_topic: "tele/tasmota_95F7C9/SENSOR"
+##    unit_of_measurement: "°C"
+##    value_template: "{{value_json['DS18B20-2'].Temperature}}"
+##    availability_topic: "tele/tasmota_95F7C9/LWT"
+##    payload_available: "Online"
+##    payload_not_available: "Offline"
+##    json_attributes_topic: "tele/tasmota_95F7C9/SENSOR"
+##    json_attributes_template: ">-
+##      {%- set sourceid = '3C01B5568ADD' -%}
+##      {%- for tsensor in value_json  -%}
+##        {%- if value_json[tsensor].Id == sourceid -%} {{value_json[tsensor].Temperature}}
+##        {%- endif -%}
+##      {%- endfor %}"
+##    device_class: temperature
 ### второй этаж
 #  - platform: mqtt
 #    name: "28_3c01b556ecd0_temperature"
