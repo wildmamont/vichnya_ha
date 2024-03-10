@@ -21,6 +21,7 @@ homeassistant:
 logger: !include logger.yaml
 #sensor: !include sensor.yaml
 mqtt:   !include mqtt.yaml
+climate: !include climate.yaml
 
 
 telegram_bot:
@@ -31,7 +32,7 @@ telegram_bot:
       - !secret telegram_bot_allowed_chat_id2
       - !secret telegram_bot_allowed_chat_id3
       - !secret telegram_bot_allowed_chat_id4
-      - !secret telegram_bot_allowed_chat_id5
+#      - !secret telegram_bot_allowed_chat_id5
 
 notify:
   - name: WildMamont

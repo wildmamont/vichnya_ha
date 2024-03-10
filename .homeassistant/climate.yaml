@@ -1,0 +1,14 @@
+  - platform: generic_thermostat
+    name: Обогреватель гостинной 
+    heater:  switch.tasmota
+    target_sensor: sensor.tasmota_si7021_temperature
+    max_temp: 25
+    min_temp: 1
+
+  - platform: generic_thermostat
+    name: Обогреватель гостинной 2
+    heater:  switch.tasmota_2
+    target_sensor: sensor.tasmota_si7021_temperature_2
+    max_temp: 25
+    min_temp: 1
+

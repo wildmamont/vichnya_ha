@@ -128,23 +128,23 @@
       target:
       - 51527842
       - 1270037554
-      - 419391648
+      - 6263155066
       - 195170377
       timeout: 350
       url: http://192.168.17.92:80/onvif/snapshot/201
       username: admin
     service: telegram_bot.send_photo
   - data:
-      message: 'Температура на втором этаже: {{ states(''sensor.28_3c01b5562324_temperature'')
-        }}, Температура на улице : {{ states(''sensor.28_3c01b556dd86_temperature'')
-        }}, Температура под крышей : {{ states(''sensor.28_3c01b556abd9_temperature'')
-        }}, Температура в подвале: {{states(''sensor.28_3c01b5568add_temperature'')
-        }}'
+      message: 'Температура на первом этаже: {{ states(''sensor.28_3c01b55646ad_temperature'')
+        }}, втором этаже: {{ states(''sensor.28_3c01b5560bc5_temperature'') }}, Температура
+        на улице : {{ states(''sensor.28_3c01b556dd86_temperature'') }}, Температура
+        под крышей : {{ states(''sensor.28_3c01b556abd9_temperature'') }}, Температура
+        в подвале: {{states(''sensor.28_3c01b5568add_temperature'') }}'
       timeout: 350
       target:
       - 51527842
       - 1270037554
-      - 419391648
+      - 6263155066
       - 195170377
     service: telegram_bot.send_message
   - data:
@@ -153,7 +153,7 @@
       target:
       - 51527842
       - 1270037554
-      - 419391648
+      - 6263155066
       - 195170377
       timeout: 350
       url: http://192.168.17.92:80/onvif/snapshot/101
@@ -165,10 +165,22 @@
       target:
       - 51527842
       - 1270037554
-      - 419391648
+      - 6263155066
       - 195170377
       timeout: 350
       url: http://192.168.17.92:80/onvif/snapshot/301
+      username: homeassistant
+    service: telegram_bot.send_photo
+  - data:
+      caption: Фото  в сторону леса {{ now().strftime('%Y-%m-%d %H:%M:%S') }}
+      password: homeassistant17
+      target:
+      - 51527842
+      - 1270037554
+      - 6263155066
+      - 195170377
+      timeout: 350
+      url: http://192.168.17.92:80/onvif/snapshot/401
       username: homeassistant
     service: telegram_bot.send_photo
   mode: single
