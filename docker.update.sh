@@ -1,5 +1,5 @@
 echo Pull
-docker pull homeassistant/raspberrypi4-homeassistant:stable
+docker pull ghcr.io/home-assistant/home-assistant:stable
 echo RESULT=$?
 #exit
 echo Stop
