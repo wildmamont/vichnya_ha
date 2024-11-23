@@ -120,9 +120,10 @@ rest_command:
       Accept: '*/*'
       Content-Type: 'application/x-www-form-urlencoded'
 
-binary_sensor:
-  - platform: ping
-    host: 10.128.162.1
-    name: "Xtrim.ru_echo_test"
-    count: 2
-    scan_interval: 60
+# 23.11.2024
+#binary_sensor:
+#  - platform: ping
+#    host: 10.128.162.1
+#    name: "Xtrim.ru_echo_test"
+#    count: 2
+#    scan_interval: 60
