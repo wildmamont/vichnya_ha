@@ -19,6 +19,28 @@ scene: !include scenes.yaml
 homeassistant:
   customize: !include customize.yaml
 logger: !include logger.yaml
+
+
+lovelace:
+  mode: storage
+  # Add yaml dashboards
+  resources:
+    - url: /local/module/fold-entity-row.js
+      type: module
+    - url: /local/module/auto-entities.js
+      type: module
+    - url: /local/module/layout-card.js
+      type: module
+    - url: /local/module/slider-entity-row.js
+      type: module
+  dashboards:
+    lovelace-yaml:
+      mode: yaml
+      title: YAML
+      icon: mdi:script
+      show_in_sidebar: true
+      filename: dashboards.yaml
+
 #sensor: !include sensor.yaml
 mqtt:   !include mqtt.yaml
 climate: !include climate.yaml
@@ -127,3 +149,5 @@ rest_command:
 #    name: "Xtrim.ru_echo_test"
 #    count: 2
 #    scan_interval: 60
+shell_command:
+  reboot_keenetic: /config/scripts/reboot_keenetic {{ password }}

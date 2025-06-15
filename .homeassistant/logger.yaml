@@ -6,13 +6,14 @@ logs:
 #  homeassistant.components.keenetic_ndms2: critical
 #  homeassistant.components.hikvision: critical
 #  homeassistant.components.device_tracker: DEBUG
-  homeassistant.components.mqtt: debug
+  homeassistant.components.mqtt: error
 #  homeassistant.components.http: debug
   homeassistant.components.rest: error
   homeassistant.components.template: debug
 #  homeassistant.components.onvif: debug
-  homeassistant.components.telegram: debug
-  homeassistant.components.stream: debug
-  homeassistant.components.onvif: debug
-  homeassistant.components.camera: debug
-  homeassistant.components.aiohttp: debug
+  homeassistant.components.telegram: error
+  homeassistant.components.stream: error
+  homeassistant.components.onvif: error
+  homeassistant.components.camera: error
+  homeassistant.components.aiohttp: error
+  habluetooth.scanner: error

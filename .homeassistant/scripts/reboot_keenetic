@@ -1,0 +1,13 @@
+#!/usr/bin/expect -f
+set password [lindex $argv 0]
+spawn telnet 192.168.17.1
+expect "Login:"
+send -- "admin\r"
+expect "Password:"
+send -- "$password\r"
+expect "(config)>"
+send -- "system reboot 120\r"
+expect "Rebooting"
+send -- "exit\r"
+expect eof
+
