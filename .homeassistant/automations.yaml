@@ -251,63 +251,65 @@
   - service: script.public_sms
     data: {}
   mode: single
-- id: '1742044912707'
-  alias: Вечернее изменение температуры
-  description: ''
-  triggers:
-  - trigger: template
-    value_template: '{{ states(''sensor.time'') == (states.input_datetime.night_on_time.state[0:5])
-      }}'
-  conditions:
-  - condition: state
-    entity_id: input_boolean.day_night_automation
-    state: 'on'
-  actions:
-  - action: climate.set_temperature
-    metadata: {}
-    data:
-      temperature: '{{ states(''input_number.nighttime_temperature'') }}'
-    target:
-      entity_id:
-      - climate.obogrevatel_gostinnoi
-      - climate.obogrevatel_gostinnoi_2
-  mode: single
-- id: '1742045114944'
-  alias: Утреннее изменение температуры
-  description: ''
-  triggers:
-  - trigger: template
-    value_template: '{{ states(''sensor.time'') == (states.input_datetime.day_on_time.state[0:5])}}'
-  conditions:
-  - condition: state
-    entity_id: input_boolean.day_night_automation
-    state: 'on'
-  actions:
-  - action: climate.set_temperature
-    metadata: {}
-    data:
-      temperature: '{{ states(''input_number.daytime_temperature'') }}'
-    target:
-      entity_id:
-      - climate.obogrevatel_gostinnoi
-      - climate.obogrevatel_gostinnoi_2
-  mode: single
-- id: '1743105905608'
-  alias: reboot keenetic
-  description: перезагрузка роутера при недоступности лыжного через 1 час.
-  triggers:
-  - trigger: state
-    entity_id:
-    - binary_sensor.192_168_29_42
-    to: 'off'
-    for:
-      hours: 0
-      minutes: 10
-      seconds: 0
-    from: 'on'
-  conditions: []
-  actions:
-  - action: shell_command.reboot_keenetic
-    data:
-      password:
-  mode: single
+#  11.07.2025
+#- id: '1742044912707'
+#  alias: Вечернее изменение температуры
+#  description: ''
+#  triggers:
+#  - trigger: template
+#    value_template: '{{ states(''sensor.time'') == (states.input_datetime.night_on_time.state[0:5])
+#      }}'
+#  conditions:
+#  - condition: state
+#    entity_id: input_boolean.day_night_automation
+#    state: 'on'
+#  actions:
+#  - action: climate.set_temperature
+#    metadata: {}
+#    data:
+#      temperature: '{{ states(''input_number.nighttime_temperature'') }}'
+#    target:
+#      entity_id:
+#      - climate.obogrevatel_gostinnoi
+#      - climate.obogrevatel_gostinnoi_2
+#  mode: single
+#- id: '1742045114944'
+#  alias: Утреннее изменение температуры
+#  description: ''
+#  triggers:
+#  - trigger: template
+#    value_template: '{{ states(''sensor.time'') == (states.input_datetime.day_on_time.state[0:5])}}'
+#  conditions:
+#  - condition: state
+#    entity_id: input_boolean.day_night_automation
+#    state: 'on'
+#  actions:
+#  - action: climate.set_temperature
+#    metadata: {}
+#    data:
+#      temperature: '{{ states(''input_number.daytime_temperature'') }}'
+#    target:
+#      entity_id:
+#      - climate.obogrevatel_gostinnoi
+#      - climate.obogrevatel_gostinnoi_2
+#  mode: single
+
+#- id: '1743105905608'
+#  alias: reboot keenetic
+#  description: перезагрузка роутера при недоступности лыжного через 1 час.
+#  triggers:
+#  - trigger: state
+#    entity_id:
+#    - binary_sensor.192_168_29_42
+#    to: 'off'
+#    for:
+#      hours: 0
+#      minutes: 10
+#      seconds: 0
+#    from: 'on'
+#  conditions: []
+#  actions:
+#  - action: shell_command.reboot_keenetic
+#    data:
+#      password: !secret keenetic_telnet_user_password
+#  mode: single
